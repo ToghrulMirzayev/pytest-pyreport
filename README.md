@@ -7,9 +7,9 @@ PyReport is a lightweight reporting plugin for Pytest that provides concise HTML
 
 To start using PyReport please follow below instructions:
 
-* Install `pyreport` plugin:
+* Install `pytest-pyreport` plugin:
 ```
-pip install pyreport==<version>
+pip install pytest-pyreport==<version>
 ```
 
 * Run tests using below command:
