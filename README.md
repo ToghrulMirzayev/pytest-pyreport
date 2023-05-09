@@ -3,6 +3,12 @@
 # Quick overview
 PyReport is a lightweight reporting plugin for Pytest that provides concise HTML reports by parsing JunitXML test results
 
+# Pre-requisites
+To be able to use this plugin you will need below dependencies:
+* Python >=3.8
+* Jinja2
+* Pytest
+
 # Getting started
 
 To start using PyReport please follow below instructions:
