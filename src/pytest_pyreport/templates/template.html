@@ -4,100 +4,22 @@
 	<title>PyReport</title>
 	<style>
 		body {
-font-family: Arial, Helvetica, sans-serif;
-margin: 0;
-padding: 0;
-}
+			font-family: Arial, Helvetica, sans-serif;
+			margin: 0;
+			padding: 0;
+			transition: background-color 0.3s ease;
+		}
 
-.frame {
-width: 80%;
-margin: 0 auto;
-border: 1px solid #ccc;
-padding: 20px;
-box-sizing: border-box;
-background-color: #f2f2f2;
-}
+		.frame {
+			width: 80%;
+			margin: 0 auto;
+			border: 1px solid #ccc;
+			padding: 20px;
+			box-sizing: border-box;
+			background-color: #f2f2f2;
+		}
 
-h1 {
-text-align: center;
-}
-
-table {
-width: 100%;
-border-collapse: collapse;
-margin-top: 20px;
-}
-
-th, td {
-padding: 10px;
-text-align: left;
-border-bottom: 1px solid #ddd;
-}
-
-th {
-background-color: #4CAF50;
-color: white;
-}
-
-.pass {
-    color: #4CAF50 !important;
-    font-weight: bold;
-}
-
-
-.fail {
-color: red;
-font-weight: bold;
-cursor: zoom-in;
-}
-
-.skip {
-color: rgb(255, 165, 0);
-font-weight: bold;
-}
-
-.hide {
-display: none;
-}
-
-.fail.expanded {
-    cursor: zoom-out;
-}
-
-.collapse {
-    display: none;
-}
-
-#pie-chart {
-    width: 200px;
-    height: 200px;
-}
-
-#test_results {
-  max-width: 600px;
-  margin: 5px auto;
-}
-
-.frame {
-    max-width: 600px;
-    margin: 40px auto;
-}
-
-#test_results {
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-#summary_table {
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-body {
-  background: linear-gradient(to bottom right, #d1f7c4, #ffffff);
-}
-
-h1 {
+		h1 {
 			font-size: 36px;
 			text-align: center;
 			text-transform: uppercase;
@@ -108,18 +30,166 @@ h1 {
 			margin: 0;
 		}
 
-.header {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	padding: 2px;
-	background-color: #4CAF50;
-}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+		}
+
+		th, td {
+			padding: 10px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+
+		th {
+			background-color: #4CAF50;
+			color: white;
+		}
+
+		.pass {
+			color: #4CAF50 !important;
+			font-weight: bold;
+		}
+		.test_row.pass td {
+			color: #4CAF50 !important;
+			font-weight: bold;
+		}
+
+		.fail {
+			color: red !important;
+			font-weight: bold;
+			cursor: zoom-in;
+		}
+
+		.test_row.fail td {
+			color: red !important;
+			font-weight: bold;
+			cursor: zoom-in;
+		}
+
+		.skip {
+			color: rgb(255, 165, 0) !important;
+			font-weight: bold;
+		}
+
+		.test_row.skip td {
+			color: rgb(255, 165, 0) !important;
+			font-weight: bold;
+		}
+
+		.hide {
+			display: none;
+		}
+
+		.fail.expanded {
+			cursor: zoom-out;
+			color: red;
+		}
+
+		.collapse {
+			display: none;
+		}
+
+		#pie-chart {
+			width: 200px;
+			height: 200px;
+		}
+
+		#test_results {
+			max-width: 600px;
+			margin: 5px auto;
+		}
+
+		.frame {
+			max-width: 600px;
+			margin: 40px auto;
+		}
+
+		#test_results {
+			max-width: 600px;
+			margin: 20px auto;
+		}
+
+		#summary_table {
+			max-width: 600px;
+			margin: 20px auto;
+		}
+
+		.header {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			padding: 2px;
+			background-color: #4CAF50;
+		}
+
+		.toggle-switch {
+			position: fixed;
+			top: 50px;
+			right: 10px;
+			z-index: 999;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 60px;
+			height: 30px;
+			background-color: #042D50;
+			border-radius: 15px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		.toggle-switch::before {
+			content: '';
+			position: absolute;
+			width: 26px;
+			height: 26px;
+			border-radius: 50%;
+			background-color: white;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+			transition: transform 0.3s ease;
+			left: 2px;
+		}
+
+		.night-mode {
+			background-color: #031D33;
+		}
+
+		.night-mode .toggle-switch {
+			background-color: #4CAF50;
+		}
+
+		.night-mode .toggle-switch::before {
+			transform: translateX(30px);
+		}
+		.night-mode body {
+			background-color: #031D33;
+		}
+
+		.night-mode h1 {
+			border-bottom-color: #fff;
+			color: #fff;
+		}
+
+		.night-mode th {
+			background-color: #042D50;
+		}
+
+		.night-mode .header {
+			background-color: #042D50;
+		}
+		.night-mode tr td {
+    	color: white;
+    	}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 	<script>
+	function toggleNightMode() {
+			document.body.classList.toggle('night-mode');
+		}
 		$(document).ready(function() {
 			$('.test_row.fail').click(function(){
 				$(this).next('.collapse').toggle();
@@ -136,6 +206,8 @@ h1 {
         </a>
 	</div>
 	</header>
+	<div class="toggle-switch" onclick="toggleNightMode()">
+	</div>
 	<div class="frame">
 		<div style="width: 100%;">
 			<canvas id="pie-chart"></canvas>
