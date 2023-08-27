@@ -23,12 +23,16 @@ def pytest_sessionfinish(session):
         tree = ET.parse('result.xml')
         root = tree.getroot()
 
+        testsuite = root.find('testsuite')
+        total_time = float(testsuite.get('time'))
+
         test_cases = []
-        for testcase in root.iter('testcase'):
+        for testcase in testsuite.iter('testcase'):
             test_case = {
                 'name': testcase.get('name'),
                 'result': 'pass',
-                'details': ''
+                'details': '',
+                'time': float(testcase.get('time'))
             }
             failure = testcase.find('failure')
             if failure is not None:
@@ -50,7 +54,7 @@ def pytest_sessionfinish(session):
         template = env.get_template('template.html')
 
         html_output = template.render(test_cases=test_cases, num_tests=num_tests, num_failures=num_failures,
-                                      num_skipped=num_skipped)
+                                      num_skipped=num_skipped, total_time=total_time)
 
         with open('pyreport.html', 'w') as f:
             f.write(html_output)
