@@ -1,2 +1,5 @@
 Jinja2
 pytest
+matplotlib
+requests
+logstyle
