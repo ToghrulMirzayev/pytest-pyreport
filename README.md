@@ -43,4 +43,4 @@ pip install pytest-pyreport==<version>
 Open it and check the test results as shown in below presentation
 
 ## Presentation
-![pyreport](docs/presentation.gif)
+![pyreport](https://toghrulmirzayev.github.io/pytest-pyreport/presentation.gif)
