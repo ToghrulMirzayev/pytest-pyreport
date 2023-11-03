@@ -21,6 +21,10 @@ def pytest_addoption(parser):
         metavar=('CHAT_ID', 'BOT_TOKEN'),
         help='Send the report to Telegram with the provided Chat ID and Bot Token'
     )
+    parser.addoption(
+        '--server',
+        help='URL or server address to include in the report notification'
+    )
 
 
 def generate_and_save_chart(report_data):
@@ -80,6 +84,7 @@ def pytest_sessionfinish(session):
     config = session.config
     generate_html_report = config.getoption('--pyreport')
     telegram_config = config.getoption('--telegram-pyreport')
+    server = config.getoption('--server')
 
     if generate_html_report:
         tree = ET.parse('result.xml')
@@ -137,16 +142,23 @@ def pytest_sessionfinish(session):
 
             custom_logger.box_log("HTML Report generation complete", CustomLog.COLOR_GREEN)
 
-        if telegram_config:
+        if telegram_config and server:
+            chat_id, bot_token = telegram_config
+            server_url = server
+            send_report_to_telegram(chat_id, bot_token, server_url)
+        elif telegram_config:
             chat_id, bot_token = telegram_config
             send_report_to_telegram(chat_id, bot_token)
 
 
-def send_report_to_telegram(chat_id, bot_token):
+def send_report_to_telegram(chat_id, bot_token, server=None):
     report_data = load_report_data()
     generate_and_save_chart(report_data)
 
-    message = f"Test results are ready and available in the 'pyreport.html' file in the project directory."
+    if server:
+        message = f"Test results are ready and available at the following URL: {server}"
+    else:
+        message = f"Test results are ready and available in the 'pyreport.html' file in the project directory."
 
     telegram_url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
     data = {'chat_id': chat_id, 'text': message}
