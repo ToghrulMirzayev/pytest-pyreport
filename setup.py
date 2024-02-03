@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pytest-pyreport',
-    version='1.4.0',
+    version='1.5.0',
     description='PyReport is a lightweight reporting plugin for Pytest that provides concise HTML report',
     long_description=open('README.md', 'r', encoding='utf-8').read(),
     long_description_content_type='text/markdown',
@@ -21,7 +21,7 @@ setup(
                  "License :: OSI Approved :: MIT License",
                  "Programming Language :: Python :: 3",
                  "Topic :: Software Development :: Testing"],
-    keywords='pytest_pyreport, python, pytest, report',
+    keywords='pytest_pyreport, python, pytest, report, slack, telegram, messenger, pyreport',
     install_requires=[
         'Jinja2',
         'pytest',

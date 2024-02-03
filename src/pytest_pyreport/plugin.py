@@ -22,6 +22,12 @@ def pytest_addoption(parser):
         help='Send the report to Telegram with the provided Chat ID and Bot Token'
     )
     parser.addoption(
+        '--slack-pyreport',
+        nargs=3,
+        metavar=('WEBHOOK_URL', 'CHANNEL', 'BOT_TOKEN'),
+        help='Send the report to Slack with the provided Webhook URL, Channel and Bot Token'
+    )
+    parser.addoption(
         '--server',
         help='URL or server address to include in the report notification'
     )
@@ -84,6 +90,7 @@ def pytest_sessionfinish(session):
     config = session.config
     generate_html_report = config.getoption('--pyreport')
     telegram_config = config.getoption('--telegram-pyreport')
+    slack_config = config.getoption('--slack-pyreport')
     server = config.getoption('--server')
 
     if generate_html_report:
@@ -150,6 +157,14 @@ def pytest_sessionfinish(session):
             chat_id, bot_token = telegram_config
             send_report_to_telegram(chat_id, bot_token)
 
+        if slack_config and server:
+            webhook, channel, slack_bot_token = slack_config
+            server_url = server
+            send_report_to_slack(webhook_url=webhook, channel=channel, bot_token=slack_bot_token, server=server_url)
+        elif slack_config:
+            webhook, channel, slack_bot_token = slack_config
+            send_report_to_slack(webhook_url=webhook, channel=channel, bot_token=slack_bot_token)
+
 
 def send_report_to_telegram(chat_id, bot_token, server=None):
     report_data = load_report_data()
@@ -179,3 +194,44 @@ def send_report_to_telegram(chat_id, bot_token, server=None):
         custom_logger.box_log("Report image has been sent to Telegram chat", CustomLog.COLOR_GREEN)
     else:
         custom_logger.box_log("Error while sending report image", CustomLog.COLOR_RED)
+
+
+def send_report_to_slack(webhook_url, channel, bot_token, server=None):
+    report_data = load_report_data()
+    generate_and_save_chart(report_data)
+
+    if server:
+        message = f":pencil: | Test results are ready and available at the following link: {server}"
+    else:
+        message = f":pencil: | Test results are ready and available in the 'pyreport.html' " \
+                  f"file in the project directory."
+
+    url = "https://slack.com/api/files.upload"
+    token = bot_token
+    channels = channel
+
+    files = {'file': open('test_results.png', 'rb')}
+    headers = {
+        'Authorization': f'Bearer {token}'
+    }
+
+    data = {'channels': channels}
+
+    response = requests.post(url, headers=headers, data=data, files=files)
+    file_url = response.json()["file"]["url_private"]
+
+    payload = {
+        "attachments": [
+            {
+                "text": message,
+                "image_url": file_url
+            }
+        ]
+    }
+
+    response = requests.post(webhook_url, json=payload)
+
+    if response.status_code == 200:
+        custom_logger.box_log("Report message and image have been sent to Slack channel", CustomLog.COLOR_GREEN)
+    else:
+        custom_logger.box_log("Error while sending report message and image to Slack channel", CustomLog.COLOR_RED)
