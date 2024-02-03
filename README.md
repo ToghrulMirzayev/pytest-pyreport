@@ -15,8 +15,8 @@ To be able to use this plugin you will need below dependencies that will be inst
 * logstyle
 
 # Supported Messengers
-* Telegram <a href="https://t.me/your-telegram-channel"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/512px-Telegram_2019_Logo.svg.png?20231105064641" alt="Telegram" width="30" height="30"></a>
-* Slack <a href="https://your-slack-channel-url"><img src="https://raw.githubusercontent.com/devicons/devicon/55609aa5bd817ff167afce0d965585c92040787a/icons/slack/slack-original.svg" alt="Slack" width="30" height="30"></a>
+* Telegram <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/512px-Telegram_2019_Logo.svg.png?20231105064641" alt="Telegram" width="30" height="30">
+* Slack <img src="https://raw.githubusercontent.com/devicons/devicon/55609aa5bd817ff167afce0d965585c92040787a/icons/slack/slack-original.svg" alt="Slack" width="30" height="30">
 
 # Getting started
 ## Installation
@@ -33,7 +33,7 @@ pip install pytest-pyreport==<version>
     pytest --junitxml=result.xml -o junit_family="xunit1" --pyreport
     ```
 
-* Run tests using below command if you want to send Telegram notification <a href="https://t.me/your-telegram-channel"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/512px-Telegram_2019_Logo.svg.png?20231105064641" alt="Telegram" width="30" height="30"></a>
+* Run tests using below command if you want to send Telegram notification <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Telegram_2019_Logo.svg/512px-Telegram_2019_Logo.svg.png?20231105064641" alt="Telegram" width="30" height="30">
     ```
     pytest --junitxml=result.xml -o junit_family="xunit1" --pyreport --telegram-pyreport <chat id> <bot token>
     ```
@@ -41,7 +41,7 @@ pip install pytest-pyreport==<version>
     * You need your own Telegram bot, which can be easily created using Telegram instructions.
   You can take the “chat ID” and “bot token” from there.
 
-* Run tests using below command if you want to send Slack notification <a href="https://your-slack-channel-url"><img src="https://raw.githubusercontent.com/devicons/devicon/55609aa5bd817ff167afce0d965585c92040787a/icons/slack/slack-original.svg" alt="Slack" width="30" height="30"></a>
+* Run tests using below command if you want to send Slack notification <img src="https://raw.githubusercontent.com/devicons/devicon/55609aa5bd817ff167afce0d965585c92040787a/icons/slack/slack-original.svg" alt="Slack" width="30" height="30">
     ```
     pytest --junitxml=result.xml -o junit_family="xunit1" --pyreport --slack-pyreport <webhook url> <channel id> <bot token>
     ```
