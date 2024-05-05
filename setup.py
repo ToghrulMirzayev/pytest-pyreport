@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pytest-pyreport',
-    version='1.5.0',
+    version='1.6.0',
     description='PyReport is a lightweight reporting plugin for Pytest that provides concise HTML report',
     long_description=open('README.md', 'r', encoding='utf-8').read(),
     long_description_content_type='text/markdown',

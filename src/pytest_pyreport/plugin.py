@@ -31,6 +31,11 @@ def pytest_addoption(parser):
         '--server',
         help='URL or server address to include in the report notification'
     )
+    parser.addoption(
+        '--failed-tests-count',
+        action='store_true',
+        help='Output the count of failed tests to JSON file'
+    )
 
 
 def generate_and_save_chart(report_data):
@@ -92,6 +97,7 @@ def pytest_sessionfinish(session):
     telegram_config = config.getoption('--telegram-pyreport')
     slack_config = config.getoption('--slack-pyreport')
     server = config.getoption('--server')
+    fail_percentage_counter = config.getoption('--failed-tests-count')
 
     if generate_html_report:
         tree = ET.parse('result.xml')
@@ -148,6 +154,17 @@ def pytest_sessionfinish(session):
                 f.write(html_output)
 
             custom_logger.box_log("HTML Report generation complete", CustomLog.COLOR_GREEN)
+
+        if fail_percentage_counter:
+            fail_percentage = (num_failures / num_tests) * 100
+
+            fail_percentage_data = {
+                "fail_count": num_failures,
+                "fail_percentage": fail_percentage
+            }
+
+            with open('fail_percentage.json', 'w') as json_file:
+                json.dump(fail_percentage_data, json_file)
 
         if telegram_config and server:
             chat_id, bot_token = telegram_config
